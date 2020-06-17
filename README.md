@@ -6,6 +6,8 @@ It is inspired by the Axios library for Javascript, and it aims to be simple and
 Right now, this project is in beta, but it supports GET and POST requests, and checking the body of them.
 
 
+EDIT: Now you can also check the response codes and headers of the response.
+
 ## Installation
 These steps will show how to get a local copy of the library compiled and running on your system.
 
