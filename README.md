@@ -35,7 +35,7 @@ This section will show some examples of how to use Epsilon.
 ### GET
 A simple GET request. This uses the GitHub API.
 
-```
+```Java
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -57,7 +57,7 @@ Result:
 ### POST
 A simple POST request. This is using a arbritary link, but you can use it on any RESTful web service that implements POST.
 
-```
+```Java
 import java.io.IOException;
 import java.net.MalformedURLException;
 
