@@ -1,5 +1,5 @@
 # Epsilon
-Epsilon is a improved HTTP framework for Java, without many of the complications brought by traditional methods.
+Epsilon is a improved HTTP library for Java, without many of the complications brought by traditional methods.
 It is inspired by the Axios library for Javascript, and it aims to be simple and easy to use for beginners.
 
 ## Status
