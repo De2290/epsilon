@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Epsilon {
-    private URL url;
+    private URL url = null;
 
 
     public void get(Consumer<Response> fun) throws IOException {
@@ -23,8 +23,17 @@ public class Epsilon {
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
+
+        StringBuffer status = new StringBuffer();
+        status.append(con.getResponseCode())
+                .append(" ")
+                .append(con.getResponseMessage())
+                .append("\n");
+
+        String headers = con.getHeaderFields().toString();
         in.close();
-        fun.accept(new Response(content.toString()));
+
+        fun.accept(new Response(content.toString(), status.toString(), headers));
     }
 
 
