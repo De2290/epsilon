@@ -54,9 +54,17 @@ public class Epsilon {
         while((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
+        StringBuffer status = new StringBuffer();
+        status.append(con.getResponseCode())
+                .append(" ")
+                .append(con.getResponseMessage())
+                .append("\n");
 
+        String headers = con.getHeaderFields().toString();
         in.close();
-        fun.accept(new Response(response.toString()));
+
+        fun.accept(new Response(response.toString(), status.toString(), headers));
+
 
 
     }
