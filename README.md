@@ -27,7 +27,48 @@ Congratulations! In your target folder there should be a file titled `epsilon-ja
 All you need to do is include the `.jar` file in your classpath and you should be good to go!
 
 
+## Examples
+This section will show some examples of how to use Epsilon.
 
+### GET
+A simple GET request. This uses the GitHub API.
+
+```
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Epsilon epsilonRequester = EpsilonBuilder.createNewRequest("https://api.github.com/orgs/octokit/repos");
+        epsilonRequester.get(response -> System.out.println(response.getResp()));
+    }
+}
+
+```
+
+Result:
+
+```
+[{"id":417862,"node_id":"MDEwOlJlcG9zaXRvcnk0MTc4NjI=","name":"octokit.rb","full_name":"octokit/octokit.rb","private":false,"owner":{"login":"octokit"...
+```
+
+### POST
+A simple POST request. This is using a arbritary link, but you can use it on any RESTful web service that implements POST.
+
+```
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Epsilon epsilonRequester = EpsilonBuilder.createNewRequest("https://your-url-here.com/api/addUser");
+        epsilonRequester.post("{}", response -> System.out.println(response.getResp()));
+    }
+}
+
+```
+
+This should respond with whatever you are expecting from the API. Note that you can use a JSON library such as GSON or Jackson to easily serialize the Java object into a string.
 ## Purpose
 I had made this after seeing the horrendous implementation of Java HTTP requests using the URL class. I wanted an easier method to use.
 Ironically, the source code for these libraries incidentally uses that same method. This is for compatibility purposes.
