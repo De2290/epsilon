@@ -14,8 +14,12 @@ import java.util.concurrent.CompletableFuture;
 public class Epsilon {
     private URL url = null;
 
-
-    public CompletableFuture<EpsilonResponse> get() throws IOException {
+    /**
+     *
+     * @return Returns a CompletableFuture that can be completed.
+     * @throws IOException
+     */
+    public CompletableFuture<EpsilonResponse> getRequest() throws IOException {
         return CompletableFuture.supplyAsync(() -> {
             HttpURLConnection con = null;
             try {
@@ -66,8 +70,13 @@ public class Epsilon {
         });
     }
 
-
-    public CompletableFuture<EpsilonResponse> post(String inputString) throws IOException {
+    /**
+     *
+     * @param inputString
+     * @return Returns a CompletableFuture that can be completed.
+     * @throws IOException
+     */
+    public CompletableFuture<EpsilonResponse> postRequest(String inputString) throws IOException {
         return CompletableFuture.supplyAsync(() -> {
             HttpURLConnection con = null;
             try {
@@ -132,6 +141,11 @@ public class Epsilon {
 
     }
 
+    /**
+     *
+     * @param url
+     * @throws MalformedURLException
+     */
     public Epsilon(String url) throws MalformedURLException {
         this.url = new URL(url);
     }

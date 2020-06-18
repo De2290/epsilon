@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.De2290.Epsilon","l":"Epsilon"},{"p":"com.De2290.Epsilon","l":"EpsilonBuilder"},{"p":"com.De2290.Epsilon","l":"EpsilonResponse"},{"p":"com.De2290.Epsilon","l":"Main"}]
