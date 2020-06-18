@@ -1,12 +1,12 @@
 # Epsilon
 Epsilon is a improved HTTP library for Java, without many of the complications brought by traditional methods.
 It is inspired by the Axios library for Javascript, and it aims to be simple and easy to use for beginners.
+It is also somewhat asynchronous.
 
 ## Status
 Right now, this project is in beta, but it supports GET and POST requests, and checking the body of them.
-
-
 EDIT: Now you can also check the response codes and headers of the response.
+EDIT 2: It's also asynchronous now.
 
 ## Installation
 These steps will show how to get a local copy of the library compiled and running on your system.
@@ -42,7 +42,8 @@ import java.net.MalformedURLException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Epsilon epsilonRequester = EpsilonBuilder.createNewRequest("https://api.github.com/orgs/octokit/repos");
-        epsilonRequester.get(response -> System.out.println(response.getResp()));
+        epsilonRequester.get().thenApply(response -> System.out.println(response.getBody())).get();
+	// This blocks the main thread to ensure that the HTTP request succeeds before our program ends.
     }
 }
 
@@ -64,7 +65,8 @@ import java.net.MalformedURLException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Epsilon epsilonRequester = EpsilonBuilder.createNewRequest("https://your-url-here.com/api/addUser");
-        epsilonRequester.post("{}", response -> System.out.println(response.getResp()));
+        epsilonRequester.post("{}").thenApply(response -> System.out.println(response.getBody())).get();
+	// This blocks the main thread to ensure that the HTTP request succeeds before our program ends.
     }
 }
 
