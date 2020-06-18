@@ -1,17 +1,17 @@
 package com.De2290.Epsilon;
 
-public class Response {
+public class EpsilonResponse {
     private String body;
     private String status;
     private String headers;
 
-    public Response(String body, String status, String headers) {
+    public EpsilonResponse(String body, String status, String headers) {
         this.body = body;
         this.status = status;
         this.headers = headers;
     }
 
-    public Response(String body, String status) {
+    public EpsilonResponse(String body, String status) {
         this.body = body;
         this.status = status;
     }
@@ -40,7 +40,7 @@ public class Response {
         this.body = body;
     }
 
-    public Response(String body) {
+    public EpsilonResponse(String body) {
         this.body = body;
     }
 
