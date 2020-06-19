@@ -1,5 +1,9 @@
 package com.De2290.Epsilon;
 
+import com.De2290.Epsilon.Requests.GetRequester;
+import com.De2290.Epsilon.Requests.PostRequester;
+import com.De2290.Epsilon.Requests.PutRequester;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,54 +24,8 @@ public class Epsilon {
      * @throws IOException
      */
     public CompletableFuture<EpsilonResponse> getRequest() throws IOException {
-        return CompletableFuture.supplyAsync(() -> {
-            HttpURLConnection con = null;
-            try {
-                con = (HttpURLConnection) url.openConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                con.setRequestMethod("GET");
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            }
-            BufferedReader in = null;
-            try {
-                in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String inputLine = null;
-            StringBuffer content = new StringBuffer();
-            while (true) {
-                try {
-                    if (!((inputLine = in.readLine()) != null)) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                content.append(inputLine);
-            }
-
-            StringBuffer status = new StringBuffer();
-            try {
-                status.append(con.getResponseCode())
-                        .append(" ")
-                        .append(con.getResponseMessage())
-                        .append("\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            String headers = con.getHeaderFields().toString();
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return new EpsilonResponse(content.toString(), status.toString(), headers);
-        });
+        GetRequester getRequester = new GetRequester(url);
+        return CompletableFuture.supplyAsync(getRequester::request);
     }
 
     /**
@@ -77,68 +35,8 @@ public class Epsilon {
      * @throws IOException
      */
     public CompletableFuture<EpsilonResponse> postRequest(String inputString) throws IOException {
-        return CompletableFuture.supplyAsync(() -> {
-            HttpURLConnection con = null;
-            try {
-                con = (HttpURLConnection) url.openConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                con.setRequestMethod("POST");
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            }
-            con.setRequestProperty("Content-Type", "application/json; utf-8");
-            con.setRequestProperty("Accept", "application/json");
-            con.setDoOutput(true);
-            try {
-                try (OutputStream os = con.getOutputStream()) {
-                    byte[] input = inputString.getBytes(StandardCharsets.UTF_8);
-                    os.write(input, 0, input.length);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            BufferedReader in = null;
-            try {
-                in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String inputLine = null;
-            StringBuffer response = new StringBuffer();
-            while(true) {
-                try {
-                    if (!((inputLine = in.readLine()) != null)) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                response.append(inputLine);
-            }
-            StringBuffer status = new StringBuffer();
-            try {
-                status.append(con.getResponseCode())
-                        .append(" ")
-                        .append(con.getResponseMessage())
-                        .append("\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            String headers = con.getHeaderFields().toString();
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return new EpsilonResponse(response.toString(), status.toString(), headers);
-        });
-
-
-
+        PostRequester postRequester = new PostRequester(inputString, url);
+        return CompletableFuture.supplyAsync(postRequester::request);
     }
 
     /**
@@ -148,66 +46,8 @@ public class Epsilon {
      * @throws IOException
      */
     public CompletableFuture<EpsilonResponse> putRequest(String inputString) throws IOException {
-        return CompletableFuture.supplyAsync(() -> {
-            HttpURLConnection con = null;
-            try {
-                con = (HttpURLConnection) url.openConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                con.setRequestMethod("PUT");
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            }
-            con.setRequestProperty("Content-Type", "application/json; utf-8");
-            con.setRequestProperty("Accept", "application/json");
-            con.setDoOutput(true);
-            try {
-                try (OutputStream os = con.getOutputStream()) {
-                    byte[] input = inputString.getBytes(StandardCharsets.UTF_8);
-                    os.write(input, 0, input.length);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            BufferedReader in = null;
-            try {
-                in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String inputLine = null;
-            StringBuffer response = new StringBuffer();
-            while(true) {
-                try {
-                    if (!((inputLine = in.readLine()) != null)) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                response.append(inputLine);
-            }
-            StringBuffer status = new StringBuffer();
-            try {
-                status.append(con.getResponseCode())
-                        .append(" ")
-                        .append(con.getResponseMessage())
-                        .append("\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            String headers = con.getHeaderFields().toString();
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return new EpsilonResponse(response.toString(), status.toString(), headers);
-
-        });
+        PutRequester putRequester = new PutRequester(url, inputString);
+        return CompletableFuture.supplyAsync(putRequester::request);
     }
     /**
      *
